@@ -10,7 +10,7 @@ def main():
 
     # avoid errors when customers making multiple orders
     def check_duplicate_customers(df):
-        return False
+        return len(df['IG 名稱~ (必需正確全名✅)']) != len(set(df['IG 名稱~ (必需正確全名✅)']))
     
     # add output sheets
     def initialise_worksheets():
@@ -141,7 +141,7 @@ def main():
         sh.worksheet('Whatsapp').update([df.columns.values.tolist()] + df.values.tolist())
         print('Updated sheet Whatsapp')
 
-    gc = gs.service_account(filename='foodpigpi-b31321f7e3cd.json')
+    gc = gs.service_account(filename='credentials.json')
     print('Opening ' + sheet_name)
     sh = gc.open(sheet_name)
     canned_message = get_df('Canned Message')
@@ -163,7 +163,6 @@ def main():
     message_dict = {}
     for customer in responses.index:
         if join_response_and_canned_message(customer, True).empty:
-            print(customer)
             continue
         phone_number = get_phone_number(customer)
         message_middle = get_message_middle(customer)
