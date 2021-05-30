@@ -37,6 +37,10 @@ def main():
             if columns_list[i] == 'IG 名稱~ (必需正確全名✅) ':
                 worksheet.update_cell(1, i + 1, 'IG 名稱~ (必需正確全名✅)')
                 print("Updated column 'IG 名稱~ (必需正確全名✅)'")
+            # change column names to English if workshhet is created in Chinese
+            if columns_list[i] == '時間戳記':
+                worksheet.update_cell(1, i + 1, 'Timestamp')
+                print("Updated column 'Timestamp'")
 
     def get_phone_number(customer):
         phone_number = responses.loc[customer]['聯絡電話〜(會whatsapp回覆訂單的)']
@@ -91,7 +95,7 @@ def main():
                     delivery_options[deliveries.index(delivery)] = ""
 
         def merge_delivery(merge_value):
-            if merge_value == "需要":
+            if merge_value == "需要" and len(pickups) > 0:
                 last_pickup = pickups[-1] if len(pickups) > 1 else pickups[0]
                 unmerged_pickups = pickups[:-1] if len(pickups) > 1 else []
                 for pickup in unmerged_pickups:
@@ -162,6 +166,7 @@ def main():
     delivery_option_list = [{} for _ in range(max(canned_message['Delivery']))]
     message_dict = {}
     for customer in responses.index:
+        print(customer)
         if join_response_and_canned_message(customer, True).empty:
             continue
         phone_number = get_phone_number(customer)
