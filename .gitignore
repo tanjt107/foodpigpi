@@ -1,5 +1,4 @@
 .DS_Store
 param.py
-develop/
-archive/
 *.json
+__pycache__

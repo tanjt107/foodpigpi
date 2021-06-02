@@ -166,7 +166,7 @@ def main():
     delivery_option_list = [{} for _ in range(max(canned_message['Delivery']))]
     message_dict = {}
     for customer in responses.index:
-        print(customer)
+        print('Processing', customer)
         if join_response_and_canned_message(customer, True).empty:
             continue
         phone_number = get_phone_number(customer)
