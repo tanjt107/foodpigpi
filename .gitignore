@@ -1,4 +1,6 @@
 .DS_Store
-param.py
-*.json
 __pycache__
+*.egg-info
+config
+test
+
