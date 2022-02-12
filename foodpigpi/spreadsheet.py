@@ -13,7 +13,7 @@ class Spreadsheet:
         self.sheet = gspread.service_account(config).open(self.title)
 
     @property
-    def locale(self):
+    def locale(self) -> str:
         if self.title.endswith("(Responses)"):
             return "en-GB"
         elif self.title.endswith("(回覆)"):
@@ -47,12 +47,12 @@ class Spreadsheet:
     def CannedMessage(self) -> CannedMessage:
         return CannedMessage(self.select_worksheet("Canned Message"))
 
-    def create_worksheet(self, title: str, rows: int = 100, cols: int = 20):
+    def create_worksheet(self, title: str, rows: int = 100, cols: int = 20) -> None:
         print(f"Creating worksheet '{title}'...")
         return self.sheet.add_worksheet(title, rows=str(rows), cols=str(cols))
 
-    def update_worksheet(self, title: str, data: dict):
-        """Write values to a worksheet."""
+    def update_worksheet(self, title: str, data: dict) -> None:
+        """Write values to a worksheet from a dictionary."""
         if title in [sheet.title for sheet in self.sheet.worksheets()]:
             ws = self.select_worksheet(title)
             ws.clear()

@@ -69,7 +69,7 @@ class Order:
         return {k: " + ".join(v) for k, v in delivery_dict.items()}
 
     @property
-    def delivery_reports(self):
+    def delivery_reports(self) -> dict[str, tuple[str, str]]:
         "A dictionary of {delivery group: (delivery option, 'item1 x quantity1 + item2 x quantity2 + ...')}."
         return {
             group: (item, option)
