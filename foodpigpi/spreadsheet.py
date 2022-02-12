@@ -22,21 +22,7 @@ class Spreadsheet:
             raise ValueError(f"Cannot determine language of '{self.title}'.")
 
     def select_worksheet(self, title: str) -> gspread.models.Worksheet:
-        ws = self.sheet.worksheet(title)
-        self.initilise_columns(ws)
-        return ws
-
-    # TODO Staticmethod
-    def initilise_columns(self, ws: gspread.models.Worksheet) -> None:
-        "Duplicate columns will be specified as 'X', 'X.1', ...'X.N', rather than 'X'...'X'."
-        # To be introduced in the gspread 5.2.0 milestone
-        counts = {}
-        for i, c in enumerate(ws.row_values(1)):
-            cur_count = counts.get(c, 0)
-            if cur_count > 0:
-                ws.update_cell(1, i + 1, f"{c}.{cur_count}")
-                print(f"Renamed '{c}' to '{c}.{cur_count} in worksheet '{self.title}'.")
-            counts[c] = cur_count + 1
+        return self.sheet.worksheet(title)
 
     @property
     def FormResponses(self) -> FormResponse:
@@ -51,20 +37,13 @@ class Spreadsheet:
         print(f"Creating worksheet '{title}'...")
         return self.sheet.add_worksheet(title, rows=str(rows), cols=str(cols))
 
-    def update_worksheet(self, title: str, data: dict) -> None:
-        """Write values to a worksheet from a dictionary."""
+    def update_worksheet(self, title: str, data: list) -> None:
+        """Write values to a worksheet"""
         if title in [sheet.title for sheet in self.sheet.worksheets()]:
             ws = self.select_worksheet(title)
             ws.clear()
         else:
-            # TODO rows and cols
-            ws = self.create_worksheet(title)
-
-        values = []
-        for key, value in data.items():
-            key = list(key) if isinstance(key, tuple) else [key]
-            value = list(value) if isinstance(value, tuple) else [value]
-            values.append(key + value)
+            ws = self.create_worksheet(title, rows=len(data), cols=len(data[0]))
 
         print(f"Updating worksheet '{title}'...")
-        ws.update(values, value_input_option="USER_ENTERED")
+        ws.update(data, value_input_option="USER_ENTERED")

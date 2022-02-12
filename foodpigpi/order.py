@@ -27,7 +27,7 @@ class Order:
                 shop_dict[item.shop] = {}
             if item.category not in shop_dict[item.shop]:
                 shop_dict[item.shop][item.category] = []
-            shop_dict[item.shop][item.category].append([item, quantity])
+            shop_dict[item.shop][item.category].append((item, quantity))
         return shop_dict
 
     def price(self, discounts: Optional[list[VolumeDiscount]] = None) -> int:
@@ -36,9 +36,8 @@ class Order:
             if discounts
             else 0
         )
-        # TODO Check type
         return (
-            sum(int(item.price * quantity) for item, quantity in self.items.items())
+            sum(item.price * quantity for item, quantity in self.items.items())
             - total_discount
         )
 

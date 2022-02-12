@@ -8,7 +8,24 @@ from foodpigpi.util import map_dict_keys
 class FormResponse:
     def __init__(self, worksheet: gspread.models.Worksheet):
         self.ws = worksheet
+        self.initilise_columns()
         self.all_responses = self.ws.get_all_records(default_blank=None)
+
+    def initilise_columns(self) -> None:
+        "Duplicate columns will be specified as 'X', 'X.1', ...'X.N', rather than 'X'...'X'."
+        # To be introduced in the gspread 5.2.0 milestone
+        try:
+            counts = {}
+            for i, c in enumerate(self.ws.row_values(1)):
+                cur_count = counts.get(c, 0)
+                if cur_count > 0:
+                    self.ws.update_cell(1, i + 1, f"{c}.{cur_count}")
+                    print(
+                        f"Renamed '{c}' to '{c}.{cur_count} in worksheet '{self.title}'."
+                    )
+                counts[c] = cur_count + 1
+        except:
+            pass
 
     @property
     def title(self) -> str:
@@ -57,7 +74,6 @@ class FormResponse:
         "A dictionary of {delivery_group: delivery_option}."
         return {c: str(i) for i, c in enumerate(self.delivery_cols, start=1)}
 
-    # TODO: Too complicated
     def orders(self, items_map: dict) -> Iterator[Order]:
         "Iterate over all responses and return an Order object."
         for response in self.all_responses:
@@ -81,7 +97,7 @@ class CannedMessage:
     @property
     def items_map(self) -> dict[str, Item]:
         "A dictionary of {item_name: item_object}."
-        return {i["Excel Name"]: Item(*i.values()) for i in self.all_items[1:]}
+        return {i["Excel Name"]: Item(*i.values()) for i in self.all_items}
 
     @property
     def number_of_deliveries(self) -> int:

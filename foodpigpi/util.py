@@ -45,3 +45,13 @@ def get_whatsapp_link(number: str, text: str) -> str:
 def remove_emoji(string: str) -> str:
     """Remove emoji from string."""
     return demoji.replace(string, "")
+
+
+def dict_to_list_of_rows(data: dict) -> list:
+    "Convert a dictionary to a list of [[key, value], [key, value], ...]."
+    values = []
+    for key, value in data.items():
+        key = list(key) if isinstance(key, tuple) else [key]
+        value = list(value) if isinstance(value, tuple) else [value]
+        values.append(key + value)
+    return values

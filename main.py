@@ -1,6 +1,11 @@
 from foodpigpi.discount import VolumeDiscount
 from foodpigpi.spreadsheet import Spreadsheet
-from foodpigpi.util import get_config, get_template, get_whatsapp_link
+from foodpigpi.util import (
+    dict_to_list_of_rows,
+    get_config,
+    get_template,
+    get_whatsapp_link,
+)
 
 
 def main():
@@ -23,9 +28,9 @@ def main():
         for k, v in order.delivery_reports.items():
             delivery_reports[k][order.index] = v
 
-    sh.update_worksheet("Whatsapp", whatsapp_links)
+    sh.update_worksheet("Whatsapp", dict_to_list_of_rows(whatsapp_links))
     for i, report in delivery_reports.items():
-        sh.update_worksheet(i, report)
+        sh.update_worksheet(i, dict_to_list_of_rows(report))
 
 
 if __name__ == "__main__":
