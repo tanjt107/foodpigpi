@@ -43,7 +43,7 @@ def get_whatsapp_link(number: str, text: str) -> str:
 
 
 def remove_emoji(string: str) -> str:
-    """Remove emoji from string."""
+    "Remove emoji from string."
     return demoji.replace(string, "")
 
 
