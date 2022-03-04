@@ -15,11 +15,9 @@ Hello🙋🏻‍♀️多謝你支持😆🤍🤍
 {% for shop, categories in items_by_shop.items() %}
 {{ shop }}
 {% for category, items in categories.items() %}
-{% if category %}
 {{ category }}
-{% endif %}
-{% for item in items %}
-{{ item[0].name_in_whatsapp }} x {{ item[1] }}
+{% for item, qunaity in items.items() %}
+{{ item }} x {{ quantity }}
 {% endfor %}
 {% endfor %}
 {% endfor %}
