@@ -7,7 +7,8 @@ This example uses Google Form to accept order. Form responses are then exported 
 ## Notification and Whatsapp link
 Order confirmation notifications based on provided template with emojis are created for each user. Links to Whatsapp which include pre-filed message are created.[^2]. Below is an example of template and the notification.
 
-```👉🏽FOODPIGPI 貝果訂單確認單🥯
+```
+👉🏽FOODPIGPI 貝果訂單確認單🥯
 Hello🙋🏻‍♀️多謝你支持😆🤍🤍
 你訂了
 
@@ -31,7 +32,8 @@ Hello🙋🏻‍♀️多謝你支持😆🤍🤍
 👉🏻TOTAL : {{ price }}
 👉🏻⭐⭐確認訂單後 麻煩必須回傳信息確認⭐⭐
 👉🏻此為最後確認單⚠️
-如msg內沒有列出的項目表示滿了團啦～```
+如msg內沒有列出的項目表示滿了團啦～
+```
 
 ![IMG_0627](https://user-images.githubusercontent.com/71891904/154886905-816c0d1b-39dd-4f8e-8dc2-7933c407411b.jpg)
 
