@@ -16,7 +16,7 @@ Hello🙋🏻‍♀️多謝你支持😆🤍🤍
 {{ shop }}
 {% for category, items in categories.items() %}
 {{ category }}
-{% for item, qunaity in items.items() %}
+{% for item, quantity in items.items() %}
 {{ item }} x {{ quantity }}
 {% endfor %}
 {% endfor %}
